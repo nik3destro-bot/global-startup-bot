@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+pyTelegramBotAPI
+psycopg2-binary
