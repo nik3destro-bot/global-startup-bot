@@ -2,7 +2,7 @@ import os
 import threading
 import psycopg2
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from telebot import TeleBot, types
 import uvicorn
 
@@ -38,9 +38,19 @@ if DATABASE_URL:
 
 # --- ВЕБ-САЙТ И СИСТЕМА ТРЕКИНГА ---
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def read_root():
-    return {"status": "Global Startup Engine is running 24/7"}
+    # Проверяем, существует ли файл index.html в корневой папке проекта
+    if os.path.exists("index.html"):
+        with open("index.html", "r", encoding="utf-8") as file:
+            # Возвращаем содержимое HTML-файла с кодом 200 (ОК)
+            return HTMLResponse(content=file.read(), status_code=200)
+    
+    # Если файл забыли загрузить, сервер покажет понятную ошибку вместо падения
+    return HTMLResponse(
+        content="<h1>Ошибка: файл index.html не найден в корне проекта!</h1>", 
+        status_code=404
+    )
 
 @app.get("/redirect/{link_id}")
 def track_and_redirect(link_id: str):
@@ -64,7 +74,7 @@ def send_welcome(message):
         conn.close()
 
     markup = types.InlineKeyboardMarkup()
-    btn1 = types.InlineKeyboardButton("🔥 Тест ссылки", url="https://твой-сайт.onrender.com/redirect/bot_promo")
+    btn1 = types.InlineKeyboardButton("🔥 Тест ссылки", url="https://global-startup-bot.onrender.com/redirect/bot_promo")
     btn2 = types.InlineKeyboardButton("📊 Статистика кликов", callback_data="stats")
     markup.add(btn1, btn2)
     

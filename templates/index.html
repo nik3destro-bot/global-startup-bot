@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Startup Portal</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --accent-color: #8b5cf6;
+            --accent-hover: #a78bfa;
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #3b82f6, var(--accent-color));
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            letter-spacing: 1px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(139, 92, 246, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #334155;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            color: #3b82f6;
+        }
+
+        .interactive-box {
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #020617;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Добро пожаловать в Global Startup</h1>
+        <p>Ваш гид в мире технологий, продуктивности и удивительных фактов</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&auto=format&fit=crop" alt="Технологии" class="card-img">
+                <div class="card-content">
+                    <h3>Будущее уже здесь</h3>
+                    <p>Искусственный интеллект, нейросети и квантовые вычисления меняют мир каждую секунду. Узнайте, как оставаться востребованным в новую эпоху.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=500&auto=format&fit=crop" alt="Продуктивность" class="card-img">
+                <div class="card-content">
+                    <h3>Секреты продуктивности</h3>
+                    <p>Как управлять своим временем без стресса? Простые и научно доказанные техники тайм-менеджмента, которые работают на 100%.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop" alt="Инструменты" class="card-img">
+                <div class="card-content">
+                    <h3>Полезные цифровые инструменты</h3>
+                    <p>Каждый день появляются сервисы, автоматизирующие рутину. Мы собираем лучшие решения для работы, учебы и творчества.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-box">
+            <h2>Знаете ли вы?</h2>
+            <p id="fact-text" style="font-size: 1.2rem; font-style: italic; min-height: 50px;">Нажмите кнопку ниже, чтобы узнать потрясающий факт!</p>
+            <button onclick="getRandomFact()">Получить случайный факт</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Global Startup Bot. Все права защищены.</p>
+    </footer>
+
+    <script>
+        const facts = [
+            "Первый в мире компьютерный программист был женщиной. Ее звали Ада Лавлейс, и жила она в XIX веке.",
+            "Каждую минуту на YouTube загружается более 500 часов видеоматериалов.",
+            "Пчелы могут считать до четырех и распознавать человеческие лица.",
+            "Около 90% всей мировой валюты существует только на компьютерах и банковских счетах в цифровом виде.",
+            "Звук в космосе не распространяется, потому что там нет атмосферы, через которую могли бы проходить звуковые волны."
+        ];
+
+        function getRandomFact() {
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            document.getElementById('fact-text').textContent = facts[randomIndex];
+        }
+    </script>
+</body>
+</html>
